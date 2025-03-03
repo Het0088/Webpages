@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - SmartScope</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2634 0%, #0f1922 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 4rem;
+            background: rgba(15, 25, 34, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            color: #00ff9d;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #00ff9d;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .auth-buttons button {
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: #00ff9d;
+            border: 1px solid #00ff9d;
+        }
+
+        .register-btn {
+            background: #00ff9d;
+            color: #0f1922;
+        }
+
+        .back-section {
+            padding: 6rem 4rem 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            color: #00ff9d;
+            text-decoration: none;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+        }
+
+        .hero-section {
+            padding: 8rem 4rem 4rem;
+            text-align: center;
+            background: linear-gradient(rgba(15, 25, 34, 0.9), rgba(15, 25, 34, 0.9));
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            color: #00ff9d;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            color: #ffffff;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease 0.2s;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .contact-form:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 157, 0.3);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #00ff9d;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 157, 0.3);
+            border-radius: 5px;
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00ff9d;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: #00ff9d;
+            color: #0f1922;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .submit-btn:hover {
+            background: #00cc7d;
+            transform: translateY(-2px);
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .contact-info:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 157, 0.3);
+        }
+
+        .contact-item {
+            margin-bottom: 2rem;
+        }
+
+        .contact-item h3 {
+            color: #00ff9d;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+
+        .contact-item p {
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: #00ff9d;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(0, 255, 157, 0.3);
+            border-radius: 50%;
+        }
+
+        .social-links a:hover {
+            transform: translateY(-5px);
+            background: rgba(0, 255, 157, 0.1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 2rem;
+            }
+
+            .nav-content {
+                display: none;
+            }
+
+            .hero-section {
+                padding: 6rem 2rem 3rem;
+            }
+
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+                padding: 2rem;
+                gap: 2rem;
+            }
+
+            .back-section {
+                padding: 5rem 2rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">SmartScope</a>
+        <div class="nav-content">
+            <div class="nav-links">
+                
+                <a href="index.html">Home</a>
+                <a href="features.html">Features</a>
+                <a href="about.html">About</a>
+                <a href="resources.html">Resources</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                <button class="login-btn">Login</button>
+                <button class="register-btn">Register</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="back-section">
+        <a href="index.html" class="back-btn">← Back to Home</a>
+    </div>
+
+    <section class="hero-section">
+        <h1>Contact Us</h1>
+        <p>Get in touch with our team for support, feedback, or inquiries.</p>
+    </section>
+
+    <div class="contact-container">
+        <div class="contact-form">
+            <h2 style="color: #00ff9d; margin-bottom: 1.5rem;">Send us a message</h2>
+            <form id="contactForm" action="process_contact.php" method="POST">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="subject">Subject</label>
+                    <input type="text" id="subject" name="subject" required>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Send Message</button>
+            </form>
+        </div>
+
+        <div class="contact-info">
+            <h2 style="color: #00ff9d; margin-bottom: 1.5rem;">Contact Information</h2>
+            
+            <div class="contact-item">
+                <h3>Email</h3>
+                <p>support@smartscope.com</p>
+            </div>
+
+            <div class="contact-item">
+                <h3>Phone</h3>
+                <p>+1 (555) 123-4567</p>
+            </div>
+
+            <div class="contact-item">
+                <h3>Address</h3>
+                <p>123 AI Research Street<br>
+                Tech Valley, CA 94025<br>
+                United States</p>
+            </div>
+
+            <div class="contact-item">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#" title="Twitter">𝕏</a>
+                    <a href="#" title="LinkedIn">in</a>
+                    <a href="#" title="GitHub">⌘</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+            
+            // Get form data
+            const formData = new FormData(this);
+            
+            // Send form data using fetch
+            fetch('process_contact.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log(data); // Log the response
+                alert(data); // Show response to user
+                if(data.includes('success')) {
+                    this.reset(); // Clear form on success
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html> 

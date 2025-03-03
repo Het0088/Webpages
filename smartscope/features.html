@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Features - SmartScope</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2634 0%, #0f1922 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 4rem;
+            background: rgba(15, 25, 34, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            color: #00ff9d;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #00ff9d;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .auth-buttons button {
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: #00ff9d;
+            border: 1px solid #00ff9d;
+        }
+
+        .register-btn {
+            background: #00ff9d;
+            color: #0f1922;
+        }
+
+        .hero-section {
+            padding: 8rem 4rem 4rem;
+            text-align: center;
+            background: linear-gradient(rgba(15, 25, 34, 0.9), rgba(15, 25, 34, 0.9)),
+                        url('path/to/your/background-image.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            color: #00ff9d;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            color: #ffffff;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease 0.2s;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: transform 0.3s;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #00ff9d;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            color: #00ff9d;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .feature-list {
+            margin-top: 1rem;
+            list-style: none;
+        }
+
+        .feature-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #00ff9d;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 2rem;
+            }
+
+            .nav-content {
+                display: none;
+            }
+
+            .hero-section {
+                padding: 6rem 2rem 3rem;
+            }
+
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .features-grid {
+                padding: 2rem;
+            }
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .back-section {
+            padding: 6rem 4rem 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            color: #00ff9d;
+            text-decoration: none;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+        }
+
+        @media (max-width: 768px) {
+            .back-section {
+                padding: 5rem 2rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">SmartScope</a>
+        <div class="nav-content">
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="features.html">Features</a>
+                <a href="about.html">About</a>
+                <a href="resources.html">Resources</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                <button class="login-btn">Login</button>
+                <button class="register-btn">Register</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="back-section">
+        <a href="index.html" class="back-btn">← Back to Home</a>
+    </div>
+
+    <section class="hero-section">
+        <h1>Powerful Features for Research Excellence</h1>
+        <p>Discover how SmartScope's cutting-edge features revolutionize the way you generate and analyze research papers.</p>
+    </section>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <div class="feature-icon">🔍</div>
+            <h3>Smart Search Technology</h3>
+            <p>Our advanced AI-powered search algorithm helps you find the most relevant research papers instantly.</p>
+            <ul class="feature-list">
+                <li>Intelligent topic recognition</li>
+                <li>Real-time search suggestions</li>
+                <li>Advanced filtering options</li>
+                <li>Multi-language support</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📄</div>
+            <h3>Automated Paper Generation</h3>
+            <p>Generate comprehensive research papers with proper academic formatting and citations.</p>
+            <ul class="feature-list">
+                <li>Custom paper formatting</li>
+                <li>Automatic citations</li>
+                <li>PDF export capability</li>
+                <li>Multiple citation styles</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <h3>Lightning-Fast Processing</h3>
+            <p>Get your research papers generated within minutes using our optimized processing system.</p>
+            <ul class="feature-list">
+                <li>Rapid paper generation</li>
+                <li>Efficient data processing</li>
+                <li>Real-time progress tracking</li>
+                <li>Batch processing support</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🔒</div>
+            <h3>Security & Privacy</h3>
+            <p>Your research data is protected with enterprise-grade security measures.</p>
+            <ul class="feature-list">
+                <li>End-to-end encryption</li>
+                <li>Secure data storage</li>
+                <li>Privacy compliance</li>
+                <li>Regular security audits</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">📊</div>
+            <h3>Analytics & Insights</h3>
+            <p>Get detailed analytics and insights about your research papers and topics.</p>
+            <ul class="feature-list">
+                <li>Citation analytics</li>
+                <li>Topic trends</li>
+                <li>Research impact metrics</li>
+                <li>Custom reports</li>
+            </ul>
+        </div>
+
+        <div class="feature-card">
+            <div class="feature-icon">🤝</div>
+            <h3>Collaboration Tools</h3>
+            <p>Work together with your team efficiently using our collaboration features.</p>
+            <ul class="feature-list">
+                <li>Real-time collaboration</li>
+                <li>Team workspaces</li>
+                <li>Comment & feedback</li>
+                <li>Version control</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Add mobile menu functionality if needed
+        // Add authentication logic if needed
+    </script>
+</body>
+</html> 

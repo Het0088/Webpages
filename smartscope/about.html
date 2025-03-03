@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - SmartScope</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a2634 0%, #0f1922 100%);
+            color: #ffffff;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 4rem;
+            background: rgba(15, 25, 34, 0.8);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            color: #00ff9d;
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #00ff9d;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .auth-buttons button {
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: #00ff9d;
+            border: 1px solid #00ff9d;
+        }
+
+        .register-btn {
+            background: #00ff9d;
+            color: #0f1922;
+        }
+
+        .back-section {
+            padding: 6rem 4rem 0;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            color: #00ff9d;
+            text-decoration: none;
+            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.3s;
+        }
+
+        .back-btn:hover {
+            transform: translateX(-5px);
+        }
+
+        .hero-section {
+            padding: 8rem 4rem 4rem;
+            text-align: center;
+            background: linear-gradient(rgba(15, 25, 34, 0.9), rgba(15, 25, 34, 0.9));
+            background-size: cover;
+            background-position: center;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            color: #00ff9d;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+            color: #ffffff;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+            animation: fadeInUp 1s ease 0.2s;
+        }
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .about-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: transform 0.3s;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .about-icon {
+            font-size: 2.5rem;
+            color: #00ff9d;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-card h3 {
+            color: #00ff9d;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-card p {
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        .team-section {
+            padding: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .team-member {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            border: 3px solid #00ff9d;
+        }
+
+        .team-member h3 {
+            color: #00ff9d;
+            margin-bottom: 0.5rem;
+        }
+
+        .team-member p {
+            color: #ffffff;
+            opacity: 0.8;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem 2rem;
+            }
+
+            .nav-content {
+                display: none;
+            }
+
+            .hero-section {
+                padding: 6rem 2rem 3rem;
+            }
+
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-grid {
+                padding: 2rem;
+            }
+
+            .team-section {
+                padding: 2rem;
+            }
+
+            .back-section {
+                padding: 5rem 2rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">SmartScope</a>
+        <div class="nav-content">
+            <div class="nav-links">
+
+                <a href="index.html">Home</a>
+                <a href="features.html">Features</a>
+                <a href="about.html">About</a>
+                <a href="resources.html">Resources</a>
+                <a href="contact.html">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                <button class="login-btn">Login</button>
+                <button class="register-btn">Register</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="back-section">
+        <a href="index.html" class="back-btn">← Back to Home</a>
+    </div>
+
+    <section class="hero-section">
+        <h1>About SmartScope</h1>
+        <p>Learn about our mission, vision, and the team behind SmartScope's innovative AI research technology.</p>
+    </section>
+
+    <div class="about-grid">
+        <div class="about-card">
+            <div class="about-icon">🎯</div>
+            <h3>Our Mission</h3>
+            <p>To revolutionize academic research by providing cutting-edge AI tools that make research paper generation and analysis accessible to everyone.</p>
+        </div>
+
+        <div class="about-card">
+            <div class="about-icon">👁️</div>
+            <h3>Our Vision</h3>
+            <p>We envision a future where AI and human intelligence work together seamlessly to advance academic research and knowledge sharing.</p>
+        </div>
+
+        <div class="about-card">
+            <div class="about-icon">💫</div>
+            <h3>Our Values</h3>
+            <p>Innovation, integrity, and accessibility guide everything we do. We're committed to maintaining the highest standards of academic excellence.</p>
+        </div>
+    </div>
+
+    <!-- <section class="team-section">
+        <h2 style="color: #00ff9d; text-align: center; margin-bottom: 2rem;">Meet Our Team</h2>
+        <div class="team-grid">
+            <div class="team-member">
+                <img src="path/to/team-member1.jpg" alt="Team Member">
+                <h3>John Doe</h3>
+                <p>Founder & CEO</p>
+            </div>
+
+            <div class="team-member">
+                <img src="path/to/team-member2.jpg" alt="Team Member">
+                <h3>Jane Smith</h3>
+                <p>Chief Technology Officer</p>
+            </div>
+
+            <div class="team-member">
+                <img src="path/to/team-member3.jpg" alt="Team Member">
+                <h3>Mike Johnson</h3>
+                <p>Head of Research</p>
+            </div>
+
+            <div class="team-member">
+                <img src="path/to/team-member4.jpg" alt="Team Member">
+                <h3>Sarah Wilson</h3>
+                <p>Lead Developer</p>
+            </div>
+        </div>
+    </section> -->
+
+    <script>
+        // Add mobile menu functionality if needed
+        // Add authentication logic if needed
+    </script>
+</body>
+</html> 

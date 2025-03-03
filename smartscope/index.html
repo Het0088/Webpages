@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartScope - AI Research Paper Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            padding: 1.5rem 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #00ff9d;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            color: #00cc7d;
+            transform: translateY(-2px);
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00ff9d;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #00ff9d;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .main-content {
+            padding: 120px 2rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 3rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #00ff9d, #00f0ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #ccc;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .search-section {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .input-group input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .generate-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            background: linear-gradient(45deg, #00ff9d, #00f0ff);
+            color: #000;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 157, 0.3);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top: 4px solid #00ff9d;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 4rem 0;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card h3 {
+            color: #00ff9d;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .feature-card p {
+            color: #ccc;
+            line-height: 1.6;
+        }
+
+        .status-message {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            display: none;
+        }
+
+        .status-message.success {
+            background: rgba(0, 255, 157, 0.1);
+            color: #00ff9d;
+        }
+
+        .status-message.error {
+            background: rgba(255, 0, 0, 0.1);
+            color: #ff4444;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-left: 2rem;
+        }
+
+        .auth-btn {
+            padding: 0.5rem 1.5rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn {
+            background: transparent;
+            color: #00ff9d;
+            border: 1px solid #00ff9d;
+        }
+
+        .login-btn:hover {
+            background: rgba(0, 255, 157, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 157, 0.2);
+        }
+
+        .register-btn {
+            background: #00ff9d;
+            color: #0f2027;
+            border: none;
+        }
+
+        .register-btn:hover {
+            background: #00cc7d;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 157, 0.3);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .welcome-text {
+            color: #fff;
+            margin-left: 1rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 1rem;
+            }
+            
+            .nav-links {
+                gap: 1rem;
+            }
+            
+            .auth-buttons {
+                margin-left: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-content {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(15, 32, 39, 0.95);
+                padding: 1rem;
+                flex-direction: column;
+                gap: 1rem;
+                backdrop-filter: blur(10px);
+            }
+
+            .nav-content.active {
+                display: flex;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+            }
+
+            .auth-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo">SmartScope</a>
+        <div class="nav-content">
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="features.php">Features</a>
+                <a href="about.php">About</a>
+                <a href="resources.php">Resources</a>
+                <a href="contact.php">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                <a href="hehe/login.html" class="auth-btn login-btn">Login</a>
+                <a href="hehe/register.html" class="auth-btn register-btn">Register</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero">
+            <h1>AI-Powered Research Paper Generator</h1>
+            <p>Transform your research with SmartScope's advanced AI technology. Generate comprehensive research papers from arXiv's vast database in minutes.</p>
+        </section>
+
+        <section class="search-section">
+            <form id="searchForm" class="search-form" action="http://localhost:8000/generate" method="POST">
+                <div class="input-group">
+                    <input type="text" id="topic" name="topic" placeholder="Enter research topic (e.g., Quantum Computing)" required>
+                    <input type="number" id="papers" name="papers" placeholder="Number of papers (1-100)" min="1" max="100" value="8" required>
+                </div>
+                <button type="submit" class="generate-btn">Generate Research Paper</button>
+            </form>
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Generating your research paper...</p>
+            </div>
+            <div class="status-message"></div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="feature-card">
+                <h3>Smart Search</h3>
+                <p>Access thousands of research papers from arXiv's database with intelligent topic-based search.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Quick Generation</h3>
+                <p>Generate comprehensive research papers in minutes, complete with citations and references.</p>
+            </div>
+            <div class="feature-card">
+                <h3>Academic Quality</h3>
+                <p>Maintain high academic standards with properly formatted papers and accurate citations.</p>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Function to update auth buttons based on login status
+        async function updateAuthButtons() {
+            try {
+                const response = await fetch('http://localhost/smartscope/check_session.php');
+                const data = await response.json();
+                const authButtons = document.querySelector('.auth-buttons');
+
+                if (data.loggedIn) {
+                    // User is logged in
+                    authButtons.innerHTML = `
+                        <form action="http://localhost/hehe/logout.php" method="post" style="margin: 0;">
+                            <button type="submit" class="auth-btn login-btn">Logout</button>
+                        </form>
+                        <span class="welcome-text">Welcome, ${data.username}</span>
+                    `;
+                } else {
+                    // User is not logged in
+                    authButtons.innerHTML = `
+                        <form action="http://localhost/hehe/login.html" method="get" style="margin: 0;">
+                            <button type="submit" class="auth-btn login-btn">Login</button>
+                        </form>
+                        <form action="http://localhost/hehe/register.html" method="get" style="margin: 0;">
+                            <button type="submit" class="auth-btn register-btn">Register</button>
+                        </form>
+                    `;
+                }
+            } catch (error) {
+                console.error('Error checking session:', error);
+            }
+        }
+
+        // Check session when page loads
+        document.addEventListener('DOMContentLoaded', updateAuthButtons);
+
+        // Add this to your existing mobile menu button event listener
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-content').classList.toggle('active');
+        });
+
+        // Add this to your existing form submission code
+        document.getElementById('searchForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            // First check if user is logged in
+            const response = await fetch('http://localhost/smartscope/check_session.php');
+            const data = await response.json();
+            
+            if (!data.loggedIn) {
+                alert('Please log in to generate research papers.');
+                window.location.href = 'http://localhost/hehe/login.html';
+                return;
+            }
+            
+            const form = this;
+            const loadingDiv = document.querySelector('.loading');
+            const statusDiv = document.querySelector('.status-message');
+            const generateBtn = form.querySelector('.generate-btn');
+            
+            // Show loading state
+            generateBtn.disabled = true;
+            loadingDiv.style.display = 'block';
+            statusDiv.style.display = 'none';
+
+            try {
+                const topic = document.getElementById('topic').value;
+                const papers = document.getElementById('papers').value;
+
+                const formData = new FormData();
+                formData.append('topic', topic);
+                formData.append('papers', papers);
+
+                const response = await fetch('http://localhost:8000/generate', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Server returned ${response.status}: ${await response.text()}`);
+                }
+
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/pdf')) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `research_paper_${topic.replace(/\s+/g, '_')}.pdf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    a.remove();
+
+                    statusDiv.className = 'status-message success';
+                    statusDiv.textContent = '✓ Paper generated successfully! Check your downloads.';
+                    statusDiv.style.display = 'block';
+                } else {
+                    throw new Error('Server response was not a PDF');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                statusDiv.className = 'status-message error';
+                statusDiv.textContent = `✗ Error: ${error.message}`;
+                statusDiv.style.display = 'block';
+            } finally {
+                generateBtn.disabled = false;
+                loadingDiv.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html> 
